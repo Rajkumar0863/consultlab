@@ -1,0 +1,15 @@
+# Event log — download from 4TU.ResearchData, do not commit
+data/
+*.xes
+*.xes.gz
+*.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS
+.DS_Store
