@@ -1,0 +1,4 @@
+outcome,cases,pct_with_rework,median_days_with,median_days_without,extra_days,total_extra_days
+pending,17228,73.4,16.7,11.1,5.6,70868
+denied,3752,36.1,16.9,13.0,3.9,5286
+cancelled,10431,9.2,25.9,31.6,-5.8,-5507

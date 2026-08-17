@@ -1,0 +1,13 @@
+activity,extra_executions,cases_affected
+A_Validating,16946,11669
+O_Created,11486,8559
+O_Create Offer,11486,8559
+O_Sent (mail and online),8657,6834
+A_Incomplete,8052,5686
+O_Cancelled,5216,3867
+W_Validate application,4936,3697
+O_Returned,1537,1493
+O_Refused,975,777
+O_Sent (online only),226,171
+W_Call incomplete files,133,129
+W_Assess potential fraud,14,13

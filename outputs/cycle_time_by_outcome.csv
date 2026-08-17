@@ -1,0 +1,5 @@
+outcome,cases,median,p90
+cancelled,10431,31.6,38.6
+denied,3752,14.1,29.6
+in_progress,98,27.0,61.0
+pending,17228,14.8,32.9
