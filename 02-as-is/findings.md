@@ -20,6 +20,17 @@ under-served follow-up step that sits alongside it.
 
 ---
 
+## The as-is process
+
+![As-is loan application process](as-is-process.png)
+
+*Reconstructed from the event log, not from process documentation. Three lanes:
+customer, application handling, offer management. The two annotated points are
+where value is lost — the document rework loop, and the post-offer follow-up
+call. Source model: [`as-is-process.bpmn`](as-is-process.bpmn).*
+
+---
+
 ## Method note
 
 The log records up to seven lifecycle transitions per activity instance — schedule,
