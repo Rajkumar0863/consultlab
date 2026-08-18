@@ -2,7 +2,7 @@
 
 > A business analysis engagement: reconstructing a real loan application process from system event data, diagnosing where value is lost, and specifying a technology-enabled recommendation with a quantified business case.
 
-**🚧 Status: in development.** Discovery and as-is analysis are complete. Requirements, to-be design and business case are in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
+**🚧 Status: in development.** Discovery, as-is analysis and process modelling are complete. Requirements, to-be design and business case are in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
 
 ---
 
@@ -17,7 +17,11 @@ A process diagnostic of **31,509 loan applications** (1.2m events, 149 staff, 13
 
 The engagement is built on the first two findings, which coincide in the data. **The event log establishes that they co-occur, not that one causes the other** — that limit is stated explicitly in the findings and shapes how the recommendation is framed.
 
-📄 **[Read the full as-is findings →](02-as-is/findings.md)**
+![As-is loan application process](02-as-is/as-is-process.png)
+
+*The as-is model, reconstructed from the event log rather than from process documentation. The two annotated points are where value is lost.*
+
+📄 **[Read the full as-is findings →](02-as-is/findings.md)** · [BPMN source](02-as-is/as-is-process.bpmn)
 
 ---
 
@@ -84,8 +88,8 @@ Recommendation
 | 2 | [Stakeholder analysis & RACI](01-discovery/stakeholder-analysis.md) | ✅ Complete |
 | 3 | [As-is findings](02-as-is/findings.md) | ✅ Complete |
 | 4 | [Process mining analysis](discover2.py) · [outputs](outputs/) | ✅ Complete |
-| 5 | As-is process model (BPMN) | 🟨 In progress |
-| 6 | Business requirements document | ⬜ Not started |
+| 5 | [As-is process model (BPMN)](02-as-is/as-is-process.png) · [source](02-as-is/as-is-process.bpmn) | ✅ Complete |
+| 6 | Business requirements document | 🟨 In progress |
 | 7 | User stories & traceability matrix | ⬜ Not started |
 | 8 | To-be process & options assessment | ⬜ Not started |
 | 9 | Business case | ⬜ Not started |
