@@ -2,7 +2,9 @@
 
 > A business analysis engagement: reconstructing a real loan application process from system event data, diagnosing where value is lost, and specifying a technology-enabled recommendation with a quantified business case.
 
-**🚧 Status: in development.** Discovery, as-is analysis, process modelling, requirements definition, the to-be design and the business case are complete. The recommendation deck is in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
+**✅ Status: complete.** A full business analysis engagement, from process discovery through to a costed recommendation. Every figure below is produced from the event log.
+
+📊 **[Read the recommendation deck (PDF) →](05-deliverables/recommendation-deck.pdf)**
 
 ---
 
@@ -95,7 +97,7 @@ To-be process                        ✅
     ↓
 Business case                        ✅
     ↓
-Recommendation
+Recommendation                       ✅
 ```
 
 ---
@@ -113,7 +115,7 @@ Recommendation
 | 7 | [User stories](03-requirements/user-stories.md) · [traceability matrix](03-requirements/traceability-matrix.md) | ✅ Complete |
 | 8 | [To-be process model](04-to-be/to-be-process.png) · [source](04-to-be/to-be-process.bpmn) · [options assessment](04-to-be/options-assessment.md) | ✅ Complete |
 | 9 | [Business case](04-to-be/business-case.md) | ✅ Complete |
-| 10 | Recommendation deck & roadmap | 🟨 In progress |
+| 10 | [Recommendation deck](05-deliverables/recommendation-deck.pdf) | ✅ Complete |
 
 ---
 
