@@ -2,7 +2,7 @@
 
 > A business analysis engagement: reconstructing a real loan application process from system event data, diagnosing where value is lost, and specifying a technology-enabled recommendation with a quantified business case.
 
-**🚧 Status: in development.** Discovery, as-is analysis, process modelling and requirements definition are complete. Requirements, to-be design and business case are in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
+**🚧 Status: in development.** Discovery, as-is analysis, process modelling, requirements definition and the to-be design are complete. The business case and recommendation deck are in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
 
 ---
 
@@ -22,6 +22,20 @@ The engagement is built on the first two findings, which coincide in the data. *
 *The as-is model, reconstructed from the event log rather than from process documentation. The two annotated points are where value is lost.*
 
 📄 **[Read the full as-is findings →](02-as-is/findings.md)** · [BPMN source](02-as-is/as-is-process.bpmn)
+
+---
+
+## Recommendation
+
+**Reprioritise the follow-up queue by lapse risk first, then add automated applicant reminders** — delivered in two stages rather than one.
+
+![To-be loan application process](04-to-be/to-be-process.png)
+
+Stage one establishes offer-stage measurement and reorders the queue by risk of the offer lapsing. It is low cost, low risk, and creates the baseline that does not currently exist. Stage two adds an automated reminder channel that consumes no handler capacity.
+
+The staging is deliberate. The event log shows the follow-up backlog and the cancellation rate co-occurring, but cannot prove one causes the other. Stage one tests that assumption cheaply: if reprioritisation alone moves the cancellation rate, stage two is justified; if it does not, the business has learned something important before investing further.
+
+📄 **[Options assessment and weighted scoring →](04-to-be/options-assessment.md)** · [BPMN source](04-to-be/to-be-process.bpmn)
 
 ---
 
@@ -67,13 +81,15 @@ Process discovery (as-is)            ✅
     ↓
 Bottleneck & rework analysis         ✅
     ↓
-Root-cause analysis                  ◐
+Root-cause analysis                  ✅
     ↓
-Requirements definition
+Requirements definition              ✅
     ↓
-Solution options assessment
+Solution options assessment          ✅
     ↓
-To-be process + business case
+To-be process                        ✅
+    ↓
+Business case                        ◐
     ↓
 Recommendation
 ```
@@ -91,8 +107,8 @@ Recommendation
 | 5 | [As-is process model (BPMN)](02-as-is/as-is-process.png) · [source](02-as-is/as-is-process.bpmn) | ✅ Complete |
 | 6 | [Business requirements document](03-requirements/BRD.md) | ✅ Complete |
 | 7 | [User stories](03-requirements/user-stories.md) · [traceability matrix](03-requirements/traceability-matrix.md) | ✅ Complete |
-| 8 | To-be process & options assessment | 🟨 In progress |
-| 9 | Business case | ⬜ Not started |
+| 8 | [To-be process model](04-to-be/to-be-process.png) · [source](04-to-be/to-be-process.bpmn) · [options assessment](04-to-be/options-assessment.md) | ✅ Complete |
+| 9 | Business case | 🟨 In progress |
 | 10 | Recommendation deck & roadmap | ⬜ Not started |
 
 ---
