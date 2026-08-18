@@ -2,7 +2,7 @@
 
 > A business analysis engagement: reconstructing a real loan application process from system event data, diagnosing where value is lost, and specifying a technology-enabled recommendation with a quantified business case.
 
-**🚧 Status: in development.** Discovery, as-is analysis, process modelling, requirements definition and the to-be design are complete. The business case and recommendation deck are in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
+**🚧 Status: in development.** Discovery, as-is analysis, process modelling, requirements definition, the to-be design and the business case are complete. The recommendation deck is in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
 
 ---
 
@@ -35,7 +35,11 @@ Stage one establishes offer-stage measurement and reorders the queue by risk of 
 
 The staging is deliberate. The event log shows the follow-up backlog and the cancellation rate co-occurring, but cannot prove one causes the other. Stage one tests that assumption cheaply: if reprioritisation alone moves the cancellation rate, stage two is justified; if it does not, the business has learned something important before investing further.
 
-📄 **[Options assessment and weighted scoring →](04-to-be/options-assessment.md)** · [BPMN source](04-to-be/to-be-process.bpmn)
+**The case:** the programme breaks even if **233 of the 9,629 applications lost each year** are recovered — a 2.4% recovery rate. On base assumptions it returns 2.1× its three-year cost; on pessimistic assumptions it does not pay back at all. Stage one costs €125,000 over three years and establishes which is true before stage two is funded.
+
+*The €166m of requested principal across cancelled applications is not treated as a benefit anywhere in this engagement. It is what applicants asked to borrow, not revenue.*
+
+📄 **[Options assessment →](04-to-be/options-assessment.md)** · **[Business case →](04-to-be/business-case.md)** · [BPMN source](04-to-be/to-be-process.bpmn)
 
 ---
 
@@ -89,7 +93,7 @@ Solution options assessment          ✅
     ↓
 To-be process                        ✅
     ↓
-Business case                        ◐
+Business case                        ✅
     ↓
 Recommendation
 ```
@@ -108,8 +112,8 @@ Recommendation
 | 6 | [Business requirements document](03-requirements/BRD.md) | ✅ Complete |
 | 7 | [User stories](03-requirements/user-stories.md) · [traceability matrix](03-requirements/traceability-matrix.md) | ✅ Complete |
 | 8 | [To-be process model](04-to-be/to-be-process.png) · [source](04-to-be/to-be-process.bpmn) · [options assessment](04-to-be/options-assessment.md) | ✅ Complete |
-| 9 | Business case | 🟨 In progress |
-| 10 | Recommendation deck & roadmap | ⬜ Not started |
+| 9 | [Business case](04-to-be/business-case.md) | ✅ Complete |
+| 10 | Recommendation deck & roadmap | 🟨 In progress |
 
 ---
 
