@@ -1,16 +1,31 @@
 # ConsultLab — Loan Application Process Diagnostic
 
-> A business analysis engagement: reconstructing a real loan application process from system event data, diagnosing where cycle time and rework are lost, and specifying a technology-enabled recommendation with a quantified business case.
+> A business analysis engagement: reconstructing a real loan application process from system event data, diagnosing where value is lost, and specifying a technology-enabled recommendation with a quantified business case.
 
-**🚧 Status: in development.** This repository is being built in the open, deliverable by deliverable. Findings and figures will be published here as they are produced — nothing is claimed ahead of the work.
+**🚧 Status: in development.** Discovery and as-is analysis are complete. Requirements, to-be design and business case are in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
+
+---
+
+## Findings so far
+
+A process diagnostic of **31,509 loan applications** (1.2m events, 149 staff, 13 months), reconstructing the as-is process directly from system event data rather than from documentation.
+
+- **33.1% of applications are cancelled after a formal offer has been issued** — 10,431 cases. Every one had received an offer; fewer than one in ten ever returned documentation.
+- **The follow-up call made after an offer is sent holds 65.5% of all queue time** in the process — 40,321 days of waiting against 181 days of actual handling. The intervention designed for this failure mode is the most under-served task in the process.
+- **73.4% of successful applications pass through a document-incompleteness loop**, adding 5.6 days each — 70,868 application-days in total.
+- **15,930 distinct process variants** across 31,509 applications; no single path accounts for more than 3.4% of cases.
+
+The engagement is built on the first two findings, which coincide in the data. **The event log establishes that they co-occur, not that one causes the other** — that limit is stated explicitly in the findings and shapes how the recommendation is framed.
+
+📄 **[Read the full as-is findings →](02-as-is/findings.md)**
 
 ---
 
 ## The Engagement
 
-A retail lending function processes loan applications submitted through an online channel. Leadership can see application volumes and approval rates, but has no visibility into **where time is lost between submission and decision**, or how much handling effort goes into re-doing work that should have completed first time.
+A retail lending function processes loan applications submitted through an online channel. Leadership can see application volumes and approval rates, but has no visibility into performance after an offer is issued — how long an offer stays live, how many applicants respond, or how many are lost while an offer remains open.
 
-**The question:** where is cycle time being lost, what is causing it, and what should the business change?
+**The question:** where is value being lost, what is causing it, and what should the business change?
 
 Rather than model the process from documentation or assumption, this engagement uses **process mining** to reconstruct what actually happens from the system's own event log — then treats the gap between the documented process and the real one as the finding.
 
@@ -19,8 +34,8 @@ Rather than model the process from documentation or assumption, this engagement 
 ## Business Questions
 
 1. What does the loan application process look like in practice, as opposed to how it is documented?
-2. Where are the bottlenecks, and how much cycle time does each cost?
-3. How much of total handling effort is rework rather than first-pass work?
+2. Where are applications lost, and at what point in the lifecycle?
+3. Does follow-up timing measurably affect conversion?
 4. Which intervention — process redesign, targeted automation, or system change — delivers the most benefit for the least disruption?
 
 ---
@@ -33,6 +48,10 @@ Rather than model the process from documentation or assumption, this engagement 
 
 The raw log is excluded from this repository (see `.gitignore`) and should be downloaded from the source above.
 
+### Method note
+
+The log records up to seven lifecycle transitions per activity instance. Activity executions are counted once per `complete` transition; the remaining transitions are used to separate queue time from processing time. Cycle-time comparisons are made within outcome group, since cancelled applications behave differently from completed ones and pooling them reverses the apparent effect of rework. `discover.py` is the initial pass; `discover2.py` is the corrected analysis, and the correction is documented in the findings.
+
 ---
 
 ## Approach
@@ -40,11 +59,11 @@ The raw log is excluded from this repository (see `.gitignore`) and should be do
 ```text
 Event log
     ↓
-Process discovery (as-is)
+Process discovery (as-is)            ✅
     ↓
-Bottleneck & rework analysis
+Bottleneck & rework analysis         ✅
     ↓
-Root-cause analysis
+Root-cause analysis                  ◐
     ↓
 Requirements definition
     ↓
@@ -57,20 +76,20 @@ Recommendation
 
 ---
 
-## Planned Deliverables
+## Deliverables
 
 | # | Deliverable | Status |
 |---|---|---|
-| 1 | Project brief & business case | ⬜ Not started |
-| 2 | Stakeholder map & RACI | ⬜ Not started |
-| 3 | As-is process model (BPMN) | ⬜ Not started |
-| 4 | Process mining analysis | ⬜ Not started |
-| 5 | Business requirements document | ⬜ Not started |
-| 6 | User stories & traceability matrix | ⬜ Not started |
-| 7 | To-be process & options assessment | ⬜ Not started |
-| 8 | Recommendation deck & roadmap | ⬜ Not started |
-
-*Update each row to 🟨 In progress / ✅ Complete as work lands.*
+| 1 | [Project brief](01-discovery/project-brief.md) | ✅ Complete |
+| 2 | [Stakeholder analysis & RACI](01-discovery/stakeholder-analysis.md) | ✅ Complete |
+| 3 | [As-is findings](02-as-is/findings.md) | ✅ Complete |
+| 4 | [Process mining analysis](discover2.py) · [outputs](outputs/) | ✅ Complete |
+| 5 | As-is process model (BPMN) | 🟨 In progress |
+| 6 | Business requirements document | ⬜ Not started |
+| 7 | User stories & traceability matrix | ⬜ Not started |
+| 8 | To-be process & options assessment | ⬜ Not started |
+| 9 | Business case | ⬜ Not started |
+| 10 | Recommendation deck & roadmap | ⬜ Not started |
 
 ---
 
@@ -78,13 +97,23 @@ Recommendation
 
 ```text
 consultlab/
-├── 01-discovery/        Project brief, stakeholder map, RACI
-├── 02-as-is/            Process mining analysis, as-is BPMN
+├── 01-discovery/        Project brief, stakeholder analysis, RACI
+├── 02-as-is/            As-is findings, process model, source metadata
 ├── 03-requirements/     BRD, user stories, traceability matrix
 ├── 04-to-be/            To-be BPMN, options assessment, business case
 ├── 05-deliverables/     Recommendation deck, implementation roadmap
+├── outputs/             Analysis output (CSV)
 ├── data/                Event log (excluded — see source above)
+├── discover.py          Initial discovery pass
+├── discover2.py         Corrected analysis (lifecycle-aware, outcome-controlled)
 └── requirements.txt
+```
+
+## Running the Analysis
+
+```bash
+pip install -r requirements.txt
+python discover2.py
 ```
 
 ---
