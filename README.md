@@ -2,7 +2,7 @@
 
 > A business analysis engagement: reconstructing a real loan application process from system event data, diagnosing where value is lost, and specifying a technology-enabled recommendation with a quantified business case.
 
-**🚧 Status: in development.** Discovery, as-is analysis and process modelling are complete. Requirements, to-be design and business case are in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
+**🚧 Status: in development.** Discovery, as-is analysis, process modelling and requirements definition are complete. Requirements, to-be design and business case are in progress — figures below are produced from the event log; nothing is claimed ahead of the work.
 
 ---
 
@@ -89,9 +89,9 @@ Recommendation
 | 3 | [As-is findings](02-as-is/findings.md) | ✅ Complete |
 | 4 | [Process mining analysis](discover2.py) · [outputs](outputs/) | ✅ Complete |
 | 5 | [As-is process model (BPMN)](02-as-is/as-is-process.png) · [source](02-as-is/as-is-process.bpmn) | ✅ Complete |
-| 6 | Business requirements document | 🟨 In progress |
-| 7 | User stories & traceability matrix | ⬜ Not started |
-| 8 | To-be process & options assessment | ⬜ Not started |
+| 6 | [Business requirements document](03-requirements/BRD.md) | ✅ Complete |
+| 7 | [User stories](03-requirements/user-stories.md) · [traceability matrix](03-requirements/traceability-matrix.md) | ✅ Complete |
+| 8 | To-be process & options assessment | 🟨 In progress |
 | 9 | Business case | ⬜ Not started |
 | 10 | Recommendation deck & roadmap | ⬜ Not started |
 
