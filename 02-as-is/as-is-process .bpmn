@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_ConsultLab" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.24.0">
+  <bpmn:collaboration id="Collaboration_1">
+    <bpmn:participant id="Participant_Lender" name="Retail lending — loan application (as-is)" processRef="Process_1" />
+    <bpmn:textAnnotation id="Note_Cancel">
+      <bpmn:text>10,431 applications. All received an offer; only 9.2% ever returned documents</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Assoc_3" sourceRef="Note_Cancel" targetRef="End_Cancelled" />
+    <bpmn:textAnnotation id="Note_Rework">
+      <bpmn:text>Rework loop: 73.4% of successful applications, +5.6 days each (70,868 application-days)</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Assoc_1" sourceRef="Note_Rework" targetRef="Task_CallIncomplete" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_Customer" name="Customer">
+        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Return</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Handling" name="Application handling">
+        <bpmn:flowNodeRef>Task_Assess</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_Docs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CallIncomplete</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Validate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CallAfter</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Offer" name="Offer management">
+        <bpmn:flowNodeRef>Gateway_Response</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Pending</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Cancelled</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_CreateOffer</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="StartEvent_1" name="Application submitted">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Assess" name="Complete application">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_Docs" name="Documents complete?">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_CallIncomplete" name="Call about incomplete files">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Return" name="Return documents">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Validate" name="Validate application">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_Response" name="Offer accepted?">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="End_Pending" name="Application pending — 54.7%">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Cancelled" name="Application cancelled — 33.1%">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="StartEvent_1" targetRef="Task_Assess" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Assess" targetRef="Gateway_Docs" />
+    <bpmn:sequenceFlow id="Flow_3" name="No" sourceRef="Gateway_Docs" targetRef="Task_CallIncomplete" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="Task_CallIncomplete" targetRef="Task_Assess" />
+    <bpmn:sequenceFlow id="Flow_5" name="Yes" sourceRef="Gateway_Docs" targetRef="Task_CreateOffer" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="Task_CreateOffer" targetRef="Task_CallAfter" />
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Task_CallAfter" targetRef="Task_Return" />
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Task_Return" targetRef="Task_Validate" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Task_Validate" targetRef="Gateway_Response" />
+    <bpmn:sequenceFlow id="Flow_10" name="Accepted" sourceRef="Gateway_Response" targetRef="End_Pending" />
+    <bpmn:sequenceFlow id="Flow_11" name="No response" sourceRef="Gateway_Response" targetRef="End_Cancelled" />
+    <bpmn:task id="Task_CreateOffer" name="Create and send offer">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_CallAfter" name="Call after offers">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:textAnnotation id="Note_Queue">
+      <bpmn:text>65.5% of all queue time in the process: 40,321 days waiting vs 181 days handling</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Assoc_2" sourceRef="Note_Queue" targetRef="Task_CallAfter" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
+      <bpmndi:BPMNShape id="Participant_Lender_di" bpmnElement="Participant_Lender" isHorizontal="true">
+        <dc:Bounds x="160" y="110" width="1290" height="680" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Offer_di" bpmnElement="Lane_Offer" isHorizontal="true">
+        <dc:Bounds x="190" y="540" width="1260" height="250" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Handling_di" bpmnElement="Lane_Handling" isHorizontal="true">
+        <dc:Bounds x="190" y="260" width="1260" height="280" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_Customer_di" bpmnElement="Lane_Customer" isHorizontal="true">
+        <dc:Bounds x="190" y="110" width="1260" height="150" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="242" y="152" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="293" y="166" width="67" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Assess_di" bpmnElement="Task_Assess">
+        <dc:Bounds x="330" y="310" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Docs_di" bpmnElement="Gateway_Docs" isMarkerVisible="true">
+        <dc:Bounds x="495" y="325" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="478" y="288" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CallIncomplete_di" bpmnElement="Task_CallIncomplete">
+        <dc:Bounds x="465" y="430" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Return_di" bpmnElement="Task_Return">
+        <dc:Bounds x="930" y="130" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Validate_di" bpmnElement="Task_Validate">
+        <dc:Bounds x="1080" y="310" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_Response_di" bpmnElement="Gateway_Response" isMarkerVisible="true">
+        <dc:Bounds x="1110" y="615" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1098" y="578" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Pending_di" bpmnElement="End_Pending">
+        <dc:Bounds x="1292" y="570" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1270" y="613" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Cancelled_di" bpmnElement="End_Cancelled">
+        <dc:Bounds x="1292" y="670" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1268" y="713" width="86" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CreateOffer_di" bpmnElement="Task_CreateOffer">
+        <dc:Bounds x="655" y="600" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_CallAfter_di" bpmnElement="Task_CallAfter">
+        <dc:Bounds x="780" y="340" width="110" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Assoc_2_di" bpmnElement="Assoc_2">
+        <di:waypoint x="850" y="250" />
+        <di:waypoint x="850" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Note_Queue_di" bpmnElement="Note_Queue">
+        <dc:Bounds x="760" y="180" width="180" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
+        <di:waypoint x="260" y="188" />
+        <di:waypoint x="260" y="350" />
+        <di:waypoint x="330" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2">
+        <di:waypoint x="440" y="350" />
+        <di:waypoint x="495" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3">
+        <di:waypoint x="520" y="375" />
+        <di:waypoint x="520" y="430" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="528" y="393" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4">
+        <di:waypoint x="465" y="470" />
+        <di:waypoint x="385" y="470" />
+        <di:waypoint x="385" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5">
+        <di:waypoint x="545" y="350" />
+        <di:waypoint x="710" y="350" />
+        <di:waypoint x="710" y="600" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="564" y="332" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6">
+        <di:waypoint x="710" y="600" />
+        <di:waypoint x="710" y="495" />
+        <di:waypoint x="835" y="495" />
+        <di:waypoint x="835" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7">
+        <di:waypoint x="890" y="380" />
+        <di:waypoint x="985" y="380" />
+        <di:waypoint x="985" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8">
+        <di:waypoint x="1040" y="170" />
+        <di:waypoint x="1135" y="170" />
+        <di:waypoint x="1135" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9">
+        <di:waypoint x="1135" y="390" />
+        <di:waypoint x="1135" y="615" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10">
+        <di:waypoint x="1160" y="640" />
+        <di:waypoint x="1226" y="640" />
+        <di:waypoint x="1226" y="588" />
+        <di:waypoint x="1292" y="588" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1180" y="570" width="52" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11">
+        <di:waypoint x="1160" y="640" />
+        <di:waypoint x="1226" y="640" />
+        <di:waypoint x="1226" y="688" />
+        <di:waypoint x="1292" y="688" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1172" y="694" width="72" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_3_di" bpmnElement="Assoc_3">
+        <di:waypoint x="1160" y="734" />
+        <di:waypoint x="1295" y="698" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Assoc_1_di" bpmnElement="Assoc_1">
+        <di:waypoint x="410" y="481" />
+        <di:waypoint x="465" y="476" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Note_Cancel_di" bpmnElement="Note_Cancel">
+        <dc:Bounds x="980" y="710" width="180" height="70" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Note_Rework_di" bpmnElement="Note_Rework">
+        <dc:Bounds x="230" y="460" width="180" height="70" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
